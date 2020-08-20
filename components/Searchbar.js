@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -7,6 +7,19 @@ import { getDisplayStr } from '../lib/urlHelper.js'
 
 export default function SearchBar ({style, currentUrl, handleSubmit}) {
   const [value, setValue] = useState('');
+  const searchbarRef = useRef(null)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (searchbarRef.current.isFocused()) {
+        return
+      }
+      // eslint-disable-next-line prefer-const
+      let newVal = getDisplayStr(currentUrl)
+      if (newVal !== value) setValue(newVal)
+    }, 1000)
+    return () => clearInterval(interval);
+  })
 
   return (
     <View style={[styles.container, style]}>
@@ -27,6 +40,7 @@ export default function SearchBar ({style, currentUrl, handleSubmit}) {
         autoCapitalize='none'
         autoCompleteType='off'
         autoCorrect={false}
+        ref={searchbarRef}
       />
     </View>
   )
@@ -46,7 +60,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   textField: {
-    width: '100%',
+    flex: 1,
     fontSize: 18,
     color: colors.text_gray
   }
