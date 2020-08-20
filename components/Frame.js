@@ -1,14 +1,17 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
-import { WebView } from 'react-native-webview';
+import ProgressWebView from 'react-native-progress-webview';
 
 export default function Frame ({currentUrl, webviewRef, handleStateChange}) {
   return (
     <View style={styles.container}>
-      <WebView
+      <ProgressWebView
         source={{ uri: currentUrl }}
         ref={webviewRef}
         onNavigationStateChange={handleStateChange}
+        allowsFullscreenVideo={true}
+        allowsInlineMediaPlayback={true}
+        allowsBackForwardNavigationGestures={true}
         startInLoadingState={true}
         renderLoading={() => (
           <ActivityIndicator

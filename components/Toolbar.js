@@ -3,12 +3,16 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 import Searchbar from './Searchbar.js'
+
 import colors from '../config/colors.js'
 
-export default function Toolbar () {
+export default function Toolbar ({currentUrl, handleSubmit}) {
   return (
     <View style={styles.container}>
-      <Searchbar />
+      <Searchbar
+        currentUrl={currentUrl}
+        handleSubmit={handleSubmit}
+      />
       <TouchableOpacity style={styles.btn}>
         <MaterialCommunityIcons name="face-recognition" size={22} color="black" />
       </TouchableOpacity>

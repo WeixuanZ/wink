@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import React, { useState, useRef } from 'react'
+import { StyleSheet, SafeAreaView } from 'react-native'
+import { StatusBar } from 'expo-status-bar'
 
 import Frame from './components/Frame.js'
 import Nav from './components/Nav.js'
 import Toolbar from './components/Toolbar.js'
+
+import { formatQuery } from './lib/urlHelper.js'
 
 export default function App() {
   const [canGoBack, setCanGoBack] = useState(false)
@@ -15,30 +17,39 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
-      <Toolbar />
+      <StatusBar style='dark' />
+      <Toolbar
+        currentUrl={currentUrl}
+        handleSubmit={({ nativeEvent }) => {
+          setCurrentUrl(formatQuery(nativeEvent.text))
+        }}
+      />
       <Frame
         currentUrl={currentUrl}
         webviewRef={webviewRef}
-        handleStateChange={navState => {
+        handleStateChange={(navState) => {
           setCanGoBack(navState.canGoBack)
           setCanGoForward(navState.canGoForward)
           setCurrentUrl(navState.url)
         }}
       />
       <Nav
-        handleGoBack={()=>{if (webviewRef.current) webviewRef.current.goBack()}}
-        handleGoForward={() => {if (webviewRef.current) webviewRef.current.goForward()}}
+        handleGoBack={() => {
+          if (webviewRef.current) webviewRef.current.goBack()
+        }}
+        handleGoForward={() => {
+          if (webviewRef.current) webviewRef.current.goForward()
+        }}
         canGoBack={canGoBack}
         canGoForward={canGoForward}
       />
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
-  },
-});
+  }
+})

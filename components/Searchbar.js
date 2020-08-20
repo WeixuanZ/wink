@@ -1,26 +1,23 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import colors from '../config/colors.js'
+import { getDisplayStr } from '../lib/urlHelper.js'
 
-const submitURL = ({nativeEvent}) => {
-  console.log(nativeEvent.text)
-}
-
-export default function SearchBar ({style}) {
-  const [value, onChangeText] = useState('');
-  const textInputRef = useRef(null);
+export default function SearchBar ({style, currentUrl, handleSubmit}) {
+  const [value, setValue] = useState('');
 
   return (
     <View style={[styles.container, style]}>
-      <Ionicons name="ios-search" size={26} color={colors.text_gray} style={styles.searchIcon} />
+      <Ionicons name='ios-search' size={22} color={colors.text_gray} style={styles.searchIcon} />
       <TextInput
         style={styles.textField}
         value={value}
-        onChangeText={text => onChangeText(text)}
-        onSubmitEditing={submitURL}
-        placeholder="Search or enter URL"
+        onChangeText={(text) => setValue(text)}
+        onSubmitEditing={handleSubmit}
+        onBlur={() => setValue(getDisplayStr(currentUrl))}
+        placeholder='Search or enter URL'
         clearTextOnFocus={true}
         keyboardAppearance='light'
         keyboardType='web-search'
@@ -30,7 +27,6 @@ export default function SearchBar ({style}) {
         autoCapitalize='none'
         autoCompleteType='off'
         autoCorrect={false}
-        ref={textInputRef}
       />
     </View>
   )
