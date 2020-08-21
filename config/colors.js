@@ -1,4 +1,4 @@
-export default {
+const colors = {
   primary: '#2a76dd',
   primaryHighlight: '#6ca0e8',
   separator: '#c8c7cc',
@@ -8,5 +8,13 @@ export default {
   green: '#4caf50',
   yellow: '#ffc107',
   red: '#ff5722',
-  black: '#222'
+  black: '#000'
+}
+
+export default colors
+
+export const faceRecBtnColors = {
+  noFace: colors.yellow,
+  noPermission: colors.red,
+  normal: colors.green
 }

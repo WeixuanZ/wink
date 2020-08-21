@@ -28,6 +28,7 @@ export default function App() {
         currentSearchbar={currentSearchbar}
         setcurrentSearchbar={setcurrentSearchbar}
         searchbarRef={searchbarRef}
+        webviewRef={webviewRef}
       />
       <Frame
         currentUrl={currentUrl}
