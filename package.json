@@ -11,6 +11,7 @@
     "expo": "~38.0.8",
     "expo-camera": "~8.3.1",
     "expo-face-detector": "~8.2.1",
+    "expo-haptics": "~8.2.1",
     "expo-screen-orientation": "~1.1.1",
     "expo-status-bar": "^1.0.2",
     "react": "~16.11.0",

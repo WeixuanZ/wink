@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, TextInput, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import * as Haptics from 'expo-haptics';
 
 import colors from '../config/colors.js'
 import { getDisplayStr } from '../lib/urlHelper.js'
@@ -9,7 +10,7 @@ export default function SearchBar({
   currentUrl,
   handleSubmit,
   currentSearchbar,
-  setcurrentSearchbar,
+  setCurrentSearchbar,
   searchbarRef
 }) {
   return (
@@ -23,9 +24,10 @@ export default function SearchBar({
       <TextInput
         style={styles.textField}
         value={currentSearchbar}
-        onChangeText={setcurrentSearchbar}
+        onChangeText={setCurrentSearchbar}
         onSubmitEditing={handleSubmit}
-        onBlur={() => setcurrentSearchbar(getDisplayStr(currentUrl))}
+        onFocus={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
+        onBlur={() => setCurrentSearchbar(getDisplayStr(currentUrl))}
         placeholder="Search or enter URL"
         clearTextOnFocus={true}
         keyboardAppearance="light"
