@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import React, { useState } from 'react'
+import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 import Searchbar from './Searchbar.js'
 
 import colors from '../config/colors.js'
 
-export default function Toolbar ({currentUrl, handleSubmit}) {
+export default function Toolbar(props) {
   return (
     <View style={styles.container}>
-      <Searchbar
-        currentUrl={currentUrl}
-        handleSubmit={handleSubmit}
-      />
+      <Searchbar {...props} />
       <TouchableOpacity style={styles.btn}>
-        <MaterialCommunityIcons name="face-recognition" size={22} color="black" />
+        <MaterialCommunityIcons
+          name="face-recognition"
+          size={22}
+          color="black"
+        />
       </TouchableOpacity>
       <TouchableOpacity style={styles.btn}>
         <Ionicons name="ios-menu" size={28} color="black" />
