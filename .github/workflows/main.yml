@@ -7,6 +7,15 @@ jobs:
   publish:
     name: Install and publish
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        username: [EXPO_CLI_USERNAME, EXPO_CLI_USERNAME_ALIAS]
+        password: [EXPO_CLI_PASSWORD, EXPO_CLI_PASSWORD_ALIAS]
+        exclude:
+          - username: EXPO_CLI_USERNAME
+            password: EXPO_CLI_PASSWORD_ALIAS
+          - username: EXPO_CLI_USERNAME_ALIAS
+            password: EXPO_CLI_PASSWORD
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -15,7 +24,8 @@ jobs:
       - uses: expo/expo-github-action@v5
         with:
           expo-version: 3.x
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-username: ${{ secrets[matrix.username] }}
+          expo-password: ${{ secrets[matrix.password] }}
+          expo-cache: true
       - run: yarn install
       - run: expo publish

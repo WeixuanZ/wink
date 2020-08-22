@@ -1,11 +1,13 @@
 {
   "main": "node_modules/expo/AppEntry.js",
+  "version": "1.0.0-alpha.0",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "release": "standard-version --sign"
   },
   "dependencies": {
     "expo": "~38.0.8",
@@ -32,7 +34,9 @@
     "eslint-plugin-react": "^7.20.5",
     "eslint-plugin-react-native": "^3.8.1",
     "eslint-plugin-standard": "^4.0.1",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "standard-version": "^9.0.0",
+    "standard-version-expo": "^1.0.3"
   },
   "private": true
 }
