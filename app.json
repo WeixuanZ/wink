@@ -3,7 +3,9 @@
     "name": "wink",
     "slug": "wink",
     "version": "1.0.0",
+    "privacy": "public",
     "orientation": "portrait",
+    "userInterfaceStyle": "light",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -19,8 +21,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "description": "A web browser controlled by winking",
+    "githubUrl": "https://github.com/WeixuanZ/wink"
   }
 }

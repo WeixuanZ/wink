@@ -75,9 +75,9 @@ export default function Toolbar({ webviewRef, ...props }) {
           } // black if not enabled, otherwise color depends on face detection state
         />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btn}>
+      {/* <TouchableOpacity style={styles.btn}>
         <Ionicons name="ios-menu" size={28} color="black" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <Camera
         type={Camera.Constants.Type.front}
         onFacesDetected={handleFacesDetected}

@@ -1,0 +1,42 @@
+![Wink](/assets/head.png)
+
+<p align="center">
+    <a aria-label="expo" href="https://expo.io/" target="_blank">
+        <img alt="Runs with Expo" src="https://img.shields.io/badge/Runs%20with%20Expo-000.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000">
+    </a>   
+    <a aria-label="build" href="https://github.com/WeixuanZ/wink/actions" target="_blank">
+      <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/weixuanz/wink/Expo%20Publish?style=flat-square">
+    </a>
+    <a aria-label="licensed under mit" href="https://github.com/WeixuanZ/wink/blob/master/LICENSE" target="_blank">
+      <img alt="License: MIT" src="https://img.shields.io/github/license/weixuanz/wink?style=flat-square">
+    </a>
+</p>
+
+---
+
+Wink (・ω<) is a simple React Native app developed for a friend, who suffered from of De Quervain Tenosynovitis. It enables you to scroll by winking 😉.
+
+This app is not designed to be fully touch-free, but to reduce the amount of scrolling required when browsing those infinitely long social media feeds. If you have an Apple device with True Depth Camera, using ARKit for eye-tracking (e.g. the amazing _Hawkeye Access_) could be a more appealing solution.
+
+Still in alpha...
+
+- [ ] Bookmark system
+- [ ] Orientation control
+- [ ] SHM detection
+- [ ] Nose tracking using Facemesh 🤨
+
+## How to use 👀
+
+Close right eye to scroll down and left to scroll up, keep it closed for continuous scrolling. Other than that, it's just your usual browser.
+
+You can turn blink detection off by pressing the face icon in the tool bar.
+
+* If detection is off, it is black
+* If detection is on:
+  - if no camera permission: red
+  - if no face detected: yellow
+  - working: green
+
+## License
+
+MIT © [Weixuan Zhang](https://weixuanz.github.io/about/).
