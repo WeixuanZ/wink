@@ -27,5 +27,13 @@ jobs:
           expo-username: ${{ secrets[matrix.username] }}
           expo-password: ${{ secrets[matrix.password] }}
           expo-cache: true
-      - run: yarn install
-      - run: expo publish
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install packages
+        run: yarn install
+
+      - name: Publish to Expo
+        run: expo publish
