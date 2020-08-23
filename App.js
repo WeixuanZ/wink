@@ -1,7 +1,7 @@
-import React, { useState, useRef } from 'react'
-import { StyleSheet, SafeAreaView } from 'react-native'
+import React, { useState, useRef, useEffect } from 'react'
+import { StyleSheet, BackHandler, SafeAreaView } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import * as Haptics from 'expo-haptics';
+import * as Haptics from 'expo-haptics'
 
 import Frame from './components/Frame.js'
 import Nav from './components/Nav.js'
@@ -19,6 +19,20 @@ export default function App() {
 
   const webviewRef = useRef(null)
   const searchbarRef = useRef(null)
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        if (canGoBack && !searchbarRef.current.isFocused()) {
+          webviewRef.current.goBack()
+          return true
+        }
+        return false
+      }
+    )
+    return () => backHandler.remove()
+  }, [canGoBack])
 
   return (
     <SafeAreaView style={styles.container}>

@@ -1,7 +1,7 @@
-import React from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, TextInput, BackHandler, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import * as Haptics from 'expo-haptics';
+import * as Haptics from 'expo-haptics'
 
 import colors from '../config/colors.js'
 import { getDisplayStr } from '../lib/urlHelper.js'
@@ -13,6 +13,20 @@ export default function SearchBar({
   setCurrentSearchbar,
   searchbarRef
 }) {
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        if (searchbarRef.current.isFocused()) {
+          searchbarRef.current.blur()
+          return true
+        }
+        return false
+      }
+    )
+    return () => backHandler.remove()
+  }, [])
+
   return (
     <View style={styles.container}>
       <Ionicons
