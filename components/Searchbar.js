@@ -29,11 +29,12 @@ export default function SearchBar({
         onFocus={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
         onBlur={() => setCurrentSearchbar(getDisplayStr(currentUrl))}
         placeholder="Search or enter URL"
-        clearTextOnFocus={true}
         keyboardAppearance="light"
         keyboardType="web-search"
         textContentType="URL"
         autoFocus={true}
+        clearTextOnFocus={true} // iOS only
+        selectTextOnFocus={true} // for Android
         enablesReturnKeyAutomatically={true}
         autoCapitalize="none"
         autoCompleteType="off"

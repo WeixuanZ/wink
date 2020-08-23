@@ -22,7 +22,11 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
+      <StatusBar
+        style="dark"
+        translucent={false} // Android
+        backgroundColor={colors.bg_white}
+      />
       <Toolbar
         currentUrl={currentUrl}
         handleSubmit={({ nativeEvent: { text } }) => {
@@ -41,6 +45,7 @@ export default function App() {
           setCanGoBack(navState.canGoBack)
           setCanGoForward(navState.canGoForward)
           setCurrentUrl(navState.url)
+          // prevent text update when textinput is in focus
           if (!searchbarRef.current.isFocused()) {
             setCurrentSearchbar(getDisplayStr(navState.url))
           }

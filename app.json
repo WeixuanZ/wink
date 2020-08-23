@@ -4,6 +4,8 @@
     "slug": "wink",
     "version": "1.0.0",
     "privacy": "public",
+    "description": "A web browser controlled by winking",
+    "githubUrl": "https://github.com/WeixuanZ/wink",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "icon": "./assets/icon.png",
@@ -20,8 +22,6 @@
     ],
     "ios": {
       "supportsTablet": true
-    },
-    "description": "A web browser controlled by winking",
-    "githubUrl": "https://github.com/WeixuanZ/wink"
+    }
   }
 }
