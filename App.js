@@ -54,6 +54,7 @@ export default function App() {
       />
       <Frame
         currentUrl={currentUrl}
+        setCurrentUrl={setCurrentUrl}
         webviewRef={webviewRef}
         handleStateChange={(navState) => {
           setCanGoBack(navState.canGoBack)

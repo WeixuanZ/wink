@@ -4,13 +4,33 @@ import ProgressWebView from 'react-native-progress-webview'
 
 import { smoothScroll } from '../lib/scroll.js'
 
-export default function Frame({ currentUrl, webviewRef, handleStateChange }) {
+export default function Frame({
+  currentUrl,
+  setCurrentUrl,
+  webviewRef,
+  handleStateChange
+}) {
+  const handleRequest = (request) => {
+    if (
+      ['instagram', 'twitter', 'facebook', 'youtube', 'linkedin'].reduce(
+        (acc, val) => request.url.includes(val) || acc,
+        false
+      ) &&
+      request.navigationType === 'click'
+    ) {
+      setCurrentUrl(request.url)
+      return false
+    }
+    return true
+  }
+
   return (
     <View style={styles.container}>
       <ProgressWebView
         source={{ uri: currentUrl }}
         ref={webviewRef}
         onNavigationStateChange={handleStateChange}
+        onShouldStartLoadWithRequest={handleRequest}
         onLoad={() => webviewRef.current.injectJavaScript(smoothScroll)}
         allowsFullscreenVideo={true}
         allowsInlineMediaPlayback={true}
