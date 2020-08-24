@@ -30,7 +30,7 @@ Still in alpha...
 
 If you are an Android user, you can use Wink through Expo Client, simply go to https://expo.io/@weixuanz/wink.
 
-Things are more complicated if you are using iOS, since I haven't paid for the Apple Developer Program 🤦‍♂️. Currently, you can fork this repository and use expo-cli to serve locally.
+Things are more complicated if you are using iOS, since I haven't paid for the Apple Developer Program 🤦‍♂️. Currently, you can clone this repository and use expo-cli to serve locally.
 
 ```
 yarn install
