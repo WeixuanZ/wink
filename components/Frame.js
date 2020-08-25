@@ -2,6 +2,7 @@ import React from 'react'
 import { View, ActivityIndicator, StyleSheet } from 'react-native'
 import ProgressWebView from 'react-native-progress-webview'
 
+import colors from '../config/colors.js'
 import { smoothScroll } from '../lib/scroll.js'
 
 export default function Frame({
@@ -50,6 +51,7 @@ export default function Frame({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: colors.bg_white // makes sure the camera preview is hidden
   }
 })

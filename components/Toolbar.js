@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { Camera } from 'expo-camera'
-import * as Haptics from 'expo-haptics';
+import * as Haptics from 'expo-haptics'
 
 import Searchbar from './Searchbar.js'
 import FaceDetector from './FaceDetector.js'
 
 import colors, { faceRecBtnColors } from '../config/colors.js'
-import injectJS, { scrollUp, scrollDown } from '../lib/scroll.js'
+import faceAction from '../lib/face.js'
 
 export default function Toolbar({ webviewRef, ...props }) {
   // true|false: whether face detection is enabled
@@ -25,28 +25,13 @@ export default function Toolbar({ webviewRef, ...props }) {
     })()
   }, [])
 
-  let debounce = false
   const handleFacesDetected = ({ faces }) => {
     if (faces[0] === undefined) { // no face detected
       setFaceState('noFace')
       return
     }
 
-    setFaceState('normal')
-    const {leftEyeOpenProbability, rightEyeOpenProbability} = faces[0]
-    // console.log(`L: ${leftEyeOpenProbability}, R: ${rightEyeOpenProbability}`)
-
-    if (rightEyeOpenProbability - leftEyeOpenProbability > 0.6 && debounce === false) {
-      injectJS(webviewRef, scrollUp)
-      debounce = true
-      setTimeout(() => { debounce = false }, 1000)
-      Haptics.selectionAsync()
-    } else if (leftEyeOpenProbability - rightEyeOpenProbability > 0.6 && debounce === false) {
-      injectJS(webviewRef, scrollDown)
-      debounce = true
-      setTimeout(() => { debounce = false }, 1000)
-      Haptics.selectionAsync()
-    }
+    faceAction(faces[0], setFaceState, webviewRef)
   }
 
   return (
