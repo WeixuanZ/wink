@@ -1,21 +1,28 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React from 'react'
+import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Ionicons } from '@expo/vector-icons'
 
 import colors from '../config/colors.js'
 
-export default function Nav ({handleGoBack, handleGoForward, canGoBack, canGoForward}) {
+export default function Nav({
+  canGoBack,
+  canGoForward,
+  handleGoBack,
+  handleGoForward
+}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity
-        style={[styles.btn, {opacity: (canGoBack) ? 1 : 0.2}]}
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={[styles.btn, { opacity: canGoBack ? 1 : 0.2 }]}
         onPress={handleGoBack}
         disabled={!canGoBack}
       >
         <Ionicons name="ios-arrow-back" size={24} color="black" />
       </TouchableOpacity>
       <TouchableOpacity
-        style={[styles.btn, {opacity: (canGoForward) ? 1 : 0.2}]}
+        // eslint-disable-next-line react-native/no-inline-styles
+        style={[styles.btn, { opacity: canGoForward ? 1 : 0.2 }]}
         onPress={handleGoForward}
         disabled={!canGoForward}
       >

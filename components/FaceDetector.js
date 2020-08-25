@@ -5,10 +5,10 @@ import * as FaceDetector from 'expo-face-detector'
 
 export default function Face({
   faceTrackState,
-  setFaceState,
+  handleMountError,
   handleFacesDetected
 }) {
-  if (!faceTrackState) {
+  if (!faceTrackState) { // remove camera component to turn it off
     return <View />
   }
 
@@ -16,7 +16,7 @@ export default function Face({
     <Camera
       style={styles.preview}
       type={Camera.Constants.Type.front}
-      onMountError={() => setFaceState('noPermission')}
+      onMountError={handleMountError}
       onFacesDetected={handleFacesDetected}
       faceDetectorSettings={{
         mode: FaceDetector.Constants.Mode.fast,

@@ -4,14 +4,13 @@ import { Ionicons } from '@expo/vector-icons'
 import * as Haptics from 'expo-haptics'
 
 import colors from '../config/colors.js'
-import { getDisplayStr } from '../lib/urlHelper.js'
 
 export default function SearchBar({
-  currentUrl,
-  handleSubmit,
   currentSearchbar,
-  setCurrentSearchbar,
-  searchbarRef
+  searchbarRef,
+  handleChangeText,
+  handleSubmit,
+  handleBlur
 }) {
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -38,10 +37,10 @@ export default function SearchBar({
       <TextInput
         style={styles.textField}
         value={currentSearchbar}
-        onChangeText={setCurrentSearchbar}
+        onChangeText={handleChangeText}
         onSubmitEditing={handleSubmit}
         onFocus={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
-        onBlur={() => setCurrentSearchbar(getDisplayStr(currentUrl))}
+        onBlur={handleBlur}
         placeholder="Search or enter URL"
         keyboardAppearance="light"
         keyboardType="web-search"

@@ -8,7 +8,6 @@ import Nav from './components/Nav.js'
 import Toolbar from './components/Toolbar.js'
 
 import { formatQuery, getDisplayStr } from './lib/urlHelper.js'
-
 import colors from './config/colors.js'
 
 export default function App() {
@@ -42,19 +41,18 @@ export default function App() {
         backgroundColor={colors.bg_white}
       />
       <Toolbar
-        currentUrl={currentUrl}
+        currentSearchbar={currentSearchbar}
+        searchbarRef={searchbarRef}
+        webviewRef={webviewRef}
+        handleChangeText={setCurrentSearchbar}
         handleSubmit={({ nativeEvent: { text } }) => {
           setCurrentUrl(formatQuery(text))
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
         }}
-        currentSearchbar={currentSearchbar}
-        setCurrentSearchbar={setCurrentSearchbar}
-        searchbarRef={searchbarRef}
-        webviewRef={webviewRef}
+        handleBlur={() => setCurrentSearchbar(getDisplayStr(currentUrl))} // restore if not submitted
       />
       <Frame
         currentUrl={currentUrl}
-        setCurrentUrl={setCurrentUrl}
         webviewRef={webviewRef}
         handleStateChange={(navState) => {
           setCanGoBack(navState.canGoBack)
@@ -65,8 +63,24 @@ export default function App() {
             setCurrentSearchbar(getDisplayStr(navState.url))
           }
         }}
+        handleRequest={(request) => {
+          // prevent links from opening apps
+          if (
+            ['instagram', 'twitter', 'facebook', 'youtube', 'linkedin'].reduce(
+              (acc, val) => request.url.includes(val) || acc,
+              false
+            ) &&
+            request.navigationType === 'click'
+          ) {
+            setCurrentUrl(request.url)
+            return false
+          }
+          return true
+        }}
       />
       <Nav
+        canGoBack={canGoBack}
+        canGoForward={canGoForward}
         handleGoBack={() => {
           if (webviewRef.current) webviewRef.current.goBack()
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
@@ -75,8 +89,6 @@ export default function App() {
           if (webviewRef.current) webviewRef.current.goForward()
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
         }}
-        canGoBack={canGoBack}
-        canGoForward={canGoForward}
       />
     </SafeAreaView>
   )

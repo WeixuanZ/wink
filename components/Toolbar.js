@@ -25,24 +25,15 @@ export default function Toolbar({ webviewRef, ...props }) {
     })()
   }, [])
 
-  const handleFacesDetected = ({ faces }) => {
-    if (faces[0] === undefined) { // no face detected
-      setFaceState('noFace')
-      return
-    }
-
-    faceAction(faces[0], setFaceState, webviewRef)
-  }
-
   return (
     <View style={styles.container}>
       <Searchbar {...props} />
       <TouchableOpacity
         style={styles.btn}
         onPress={() => {
-          setFaceTrackState(!faceTrackState)
+          setFaceTrackState(!faceTrackState) // toggle face detection
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-        }} // toggle face detection
+        }}
       >
         <MaterialCommunityIcons
           name="face-recognition"
@@ -58,9 +49,16 @@ export default function Toolbar({ webviewRef, ...props }) {
         <Ionicons name="ios-menu" size={28} color="black" />
       </TouchableOpacity> */}
       <FaceDetector
-        setFaceState={setFaceState}
-        handleFacesDetected={handleFacesDetected}
         faceTrackState={faceTrackState}
+        handleMountError={() => setFaceState('noPermission')}
+        handleFacesDetected={({ faces }) => {
+          if (faces[0] === undefined) {
+            // no face detected
+            setFaceState('noFace')
+            return
+          }
+          faceAction(faces[0], setFaceState, webviewRef)
+        }}
       />
     </View>
   )
