@@ -10,11 +10,7 @@ import FaceDetector from './FaceDetector.js'
 import colors, { faceRecBtnColors } from '../config/colors.js'
 import faceAction from '../lib/face.js'
 
-export default function Toolbar({
-  seachbarFocused,
-  webviewRef,
-  ...props
-}) {
+export default function Toolbar({ seachbarFocused, webviewRef, ...props }) {
   // true|false: whether face detection is enabled
   const [faceTrackState, setFaceTrackState] = useState(false)
   // 'noPermission'|'noFace'|'normal': the state of face detection

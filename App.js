@@ -39,68 +39,71 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar
           style="dark"
-        translucent={false} // Android
-        backgroundColor={colors.bg_white}
-      />
-      <Toolbar
-        currentSearchbar={currentSearchbar}
-        seachbarFocused={seachbarFocused}
-        webviewRef={webviewRef}
-        handleChangeText={setCurrentSearchbar}
-        handleSubmit={({ nativeEvent: { text } }) => {
-          setCurrentUrl(formatQuery(text))
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
-        }}
-        handleFocus={() => {
-          setSeachbarFocused(true)
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-        }}
-        handleBlur={() => {
-          setSeachbarFocused(false)
-          setCurrentSearchbar(getDisplayStr(currentUrl)) // restore if not submitted
-        }}
-      />
-      <Frame
-        currentUrl={currentUrl}
-        webviewRef={webviewRef}
-        handleStateChange={(navState) => {
-          setCanGoBack(navState.canGoBack)
-          setCanGoForward(navState.canGoForward)
-          setCurrentUrl(navState.url)
-          // prevent text update when textinput is in focus
-          if (!seachbarFocused) {
-            setCurrentSearchbar(getDisplayStr(navState.url))
-          }
-        }}
-        handleRequest={(request) => {
-          // prevent links from opening apps
-          if (
-            ['instagram', 'twitter', 'facebook', 'youtube', 'linkedin'].reduce(
-              (acc, val) => request.url.includes(val) || acc,
-              false
-            ) &&
-            request.navigationType === 'click'
-          ) {
-            setCurrentUrl(request.url)
-            return false
-          }
-          return true
-        }}
-      />
-      <Nav
-        canGoBack={canGoBack}
-        canGoForward={canGoForward}
-        handleGoBack={() => {
-          if (webviewRef.current) webviewRef.current.goBack()
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-        }}
-        handleGoForward={() => {
-          if (webviewRef.current) webviewRef.current.goForward()
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-        }}
-        handleShare={async () => {
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-          try {
+          translucent={false} // Android
+          backgroundColor={colors.bg_white}
+        />
+        <Toolbar
+          {...{
+            currentSearchbar,
+            seachbarFocused,
+            webviewRef
+          }}
+          handleChangeText={setCurrentSearchbar}
+          handleSubmit={({ nativeEvent: { text } }) => {
+            setCurrentUrl(formatQuery(text))
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+          }}
+          handleFocus={() => {
+            setSeachbarFocused(true)
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          }}
+          handleBlur={() => {
+            setSeachbarFocused(false)
+            setCurrentSearchbar(getDisplayStr(currentUrl)) // restore if not submitted
+          }}
+        />
+        <Frame
+          {...{ currentUrl, webviewRef }}
+          handleStateChange={(navState) => {
+            setCanGoBack(navState.canGoBack)
+            setCanGoForward(navState.canGoForward)
+            setCurrentUrl(navState.url)
+            // prevent text update when textinput is in focus
+            if (!seachbarFocused) {
+              setCurrentSearchbar(getDisplayStr(navState.url))
+            }
+          }}
+          handleRequest={(request) => {
+            // prevent links from opening apps
+            if (
+              [
+                'instagram',
+                'twitter',
+                'facebook',
+                'youtube',
+                'linkedin'
+              ].reduce((acc, val) => request.url.includes(val) || acc, false) &&
+              request.navigationType === 'click'
+            ) {
+              setCurrentUrl(request.url)
+              return false
+            }
+            return true
+          }}
+        />
+        <Nav
+          {...{ canGoBack, canGoForward }}
+          handleGoBack={() => {
+            if (webviewRef.current) webviewRef.current.goBack()
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          }}
+          handleGoForward={() => {
+            if (webviewRef.current) webviewRef.current.goForward()
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          }}
+          handleShare={async () => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            try {
               await Share.share({
                 message: `I'm using Wink to browse the web: ${currentUrl}`,
                 url: currentUrl
