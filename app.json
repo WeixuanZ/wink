@@ -2,7 +2,7 @@
   "expo": {
     "name": "wink",
     "slug": "wink",
-    "version": "1.0.0-alpha.1",
+    "version": "1.0.0-alpha.2",
     "privacy": "public",
     "description": "A web browser controlled by winking",
     "githubUrl": "https://github.com/WeixuanZ/wink",
