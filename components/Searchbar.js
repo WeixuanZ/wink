@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { View, TextInput, BackHandler, StyleSheet } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import * as Haptics from 'expo-haptics'
 
 import colors from '../config/colors.js'
 
@@ -10,6 +9,7 @@ export default function SearchBar({
   searchbarRef,
   handleChangeText,
   handleSubmit,
+  handleFocus,
   handleBlur
 }) {
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function SearchBar({
         value={currentSearchbar}
         onChangeText={handleChangeText}
         onSubmitEditing={handleSubmit}
-        onFocus={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)}
+        onFocus={handleFocus}
         onBlur={handleBlur}
         placeholder="Search or enter URL"
         keyboardAppearance="light"

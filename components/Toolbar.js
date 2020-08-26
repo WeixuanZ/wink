@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Camera } from 'expo-camera'
 import * as Haptics from 'expo-haptics'
 
@@ -10,11 +10,17 @@ import FaceDetector from './FaceDetector.js'
 import colors, { faceRecBtnColors } from '../config/colors.js'
 import faceAction from '../lib/face.js'
 
-export default function Toolbar({ webviewRef, searchbarRef, ...props }) {
+export default function Toolbar({
+  seachbarFocused,
+  webviewRef,
+  ...props
+}) {
   // true|false: whether face detection is enabled
   const [faceTrackState, setFaceTrackState] = useState(false)
   // 'noPermission'|'noFace'|'normal': the state of face detection
   const [faceState, setFaceState] = useState('noFace')
+
+  const searchbarRef = useRef(null)
 
   // check camera permission
   useEffect(() => {
@@ -27,30 +33,40 @@ export default function Toolbar({ webviewRef, searchbarRef, ...props }) {
 
   return (
     <View style={styles.container}>
-      <Searchbar
-        searchbarRef={searchbarRef}
-        {...props}
-      />
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() => {
-          setFaceTrackState(!faceTrackState) // toggle face detection
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-        }}
-      >
-        <MaterialCommunityIcons
-          name="face-recognition"
-          size={22}
-          color={
-            faceTrackState
-              ? faceRecBtnColors[faceState] || faceRecBtnColors.noPermission
-              : colors.black
-          } // black if not enabled, otherwise color depends on face detection state
-        />
-      </TouchableOpacity>
-      {/* <TouchableOpacity style={styles.btn}>
-        <Ionicons name="ios-menu" size={28} color="black" />
-      </TouchableOpacity> */}
+      <Searchbar searchbarRef={searchbarRef} {...props} />
+      {seachbarFocused ? (
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            searchbarRef.current.blur()
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          }}
+        >
+          <MaterialCommunityIcons
+            name="close-circle-outline"
+            size={24}
+            color="black"
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            setFaceTrackState(!faceTrackState) // toggle face detection
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          }}
+        >
+          <MaterialCommunityIcons
+            name="face-recognition"
+            size={22}
+            color={
+              faceTrackState
+                ? faceRecBtnColors[faceState] || faceRecBtnColors.noPermission
+                : colors.black
+            } // black if not enabled, otherwise color depends on face detection state
+          />
+        </TouchableOpacity>
+      )}
       <FaceDetector
         faceTrackState={faceTrackState}
         handleMountError={() => setFaceState('noPermission')}

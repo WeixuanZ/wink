@@ -15,15 +15,15 @@ export default function App() {
   const [canGoForward, setCanGoForward] = useState(false)
   const [currentUrl, setCurrentUrl] = useState('https://www.google.com')
   const [currentSearchbar, setCurrentSearchbar] = useState('')
+  const [seachbarFocused, setSeachbarFocused] = useState(true)
 
   const webviewRef = useRef(null)
-  const searchbarRef = useRef(null)
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       () => {
-        if (canGoBack && !searchbarRef.current.isFocused()) {
+        if (canGoBack && !seachbarFocused) {
           webviewRef.current.goBack()
           return true
         }
@@ -42,14 +42,21 @@ export default function App() {
       />
       <Toolbar
         currentSearchbar={currentSearchbar}
-        searchbarRef={searchbarRef}
+        seachbarFocused={seachbarFocused}
         webviewRef={webviewRef}
         handleChangeText={setCurrentSearchbar}
         handleSubmit={({ nativeEvent: { text } }) => {
           setCurrentUrl(formatQuery(text))
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
         }}
-        handleBlur={() => setCurrentSearchbar(getDisplayStr(currentUrl))} // restore if not submitted
+        handleFocus={() => {
+          setSeachbarFocused(true)
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+        }}
+        handleBlur={() => {
+          setSeachbarFocused(false)
+          setCurrentSearchbar(getDisplayStr(currentUrl)) // restore if not submitted
+        }}
       />
       <Frame
         currentUrl={currentUrl}
@@ -59,7 +66,7 @@ export default function App() {
           setCanGoForward(navState.canGoForward)
           setCurrentUrl(navState.url)
           // prevent text update when textinput is in focus
-          if (!searchbarRef.current.isFocused()) {
+          if (!seachbarFocused) {
             setCurrentSearchbar(getDisplayStr(navState.url))
           }
         }}
