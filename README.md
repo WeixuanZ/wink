@@ -7,8 +7,10 @@
     <a aria-label="build" href="https://github.com/WeixuanZ/wink/actions" target="_blank">
       <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/weixuanz/wink/Expo%20Publish?style=flat-square">
     </a>
-    <img alt="Version" src="https://img.shields.io/github/package-json/v/weixuanz/wink?style=flat-square">
-    <a aria-label="licensed under mit" href="https://github.com/WeixuanZ/wink/blob/master/LICENSE" target="_blank">
+    <a aria-label="version" href="https://github.com/WeixuanZ/wink/blob/master/CHANGELOG.md">
+      <img alt="Version" src="https://img.shields.io/github/package-json/v/weixuanz/wink?style=flat-square">
+    </a>
+    <a aria-label="licensed" href="https://github.com/WeixuanZ/wink/blob/master/LICENSE" target="_blank">
       <img alt="License: MIT" src="https://img.shields.io/github/license/weixuanz/wink?style=flat-square">
     </a>
 </p>
@@ -23,7 +25,8 @@ Still in alpha...
 
 - [ ] Bookmark system
 - [ ] Orientation control
-- [ ] SHM detection
+- [ ] SMH detection
+- [ ] Speech-to-text
 - [ ] Nose tracking using Facemesh 🤨
 
 ## Installation
@@ -41,7 +44,7 @@ Or you can detach to ExpoKit with `yarn run eject`, build using Xcode and sidelo
 
 ## How to use 👀
 
-Close right eye to scroll down and left to scroll up, keep it closed for continuous scrolling. Other than that, it's just your usual browser.
+Close right eye to scroll down and left to scroll up, keep it closed for continuous scrolling. Double blink to focus the search bar. Otherwise, it's just your usual browser.
 
 You can turn blink detection off by pressing the face icon in the tool bar.
 

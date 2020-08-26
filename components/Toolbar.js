@@ -10,7 +10,7 @@ import FaceDetector from './FaceDetector.js'
 import colors, { faceRecBtnColors } from '../config/colors.js'
 import faceAction from '../lib/face.js'
 
-export default function Toolbar({ webviewRef, ...props }) {
+export default function Toolbar({ webviewRef, searchbarRef, ...props }) {
   // true|false: whether face detection is enabled
   const [faceTrackState, setFaceTrackState] = useState(false)
   // 'noPermission'|'noFace'|'normal': the state of face detection
@@ -27,7 +27,10 @@ export default function Toolbar({ webviewRef, ...props }) {
 
   return (
     <View style={styles.container}>
-      <Searchbar {...props} />
+      <Searchbar
+        searchbarRef={searchbarRef}
+        {...props}
+      />
       <TouchableOpacity
         style={styles.btn}
         onPress={() => {
@@ -57,7 +60,7 @@ export default function Toolbar({ webviewRef, ...props }) {
             setFaceState('noFace')
             return
           }
-          faceAction(faces[0], setFaceState, webviewRef)
+          faceAction(faces[0], setFaceState, webviewRef, searchbarRef)
         }}
       />
     </View>

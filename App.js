@@ -3,9 +3,9 @@ import { StyleSheet, BackHandler, SafeAreaView } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import * as Haptics from 'expo-haptics'
 
+import Toolbar from './components/Toolbar.js'
 import Frame from './components/Frame.js'
 import Nav from './components/Nav.js'
-import Toolbar from './components/Toolbar.js'
 
 import { formatQuery, getDisplayStr } from './lib/urlHelper.js'
 import colors from './config/colors.js'

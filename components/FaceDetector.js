@@ -22,8 +22,8 @@ export default function Face({
         mode: FaceDetector.Constants.Mode.fast,
         detectLandmarks: FaceDetector.Constants.Landmarks.all,
         runClassifications: FaceDetector.Constants.Classifications.all,
-        minDetectionInterval: 200,
-        tracking: true
+        minDetectionInterval: 100,
+        tracking: false
       }}
     />
   )
