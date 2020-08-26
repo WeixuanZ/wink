@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ActivityIndicator, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import ProgressWebView from 'react-native-progress-webview'
 
 import colors from '../config/colors.js'
@@ -22,14 +22,6 @@ export default function Frame({
         allowsFullscreenVideo={true}
         allowsInlineMediaPlayback={true}
         allowsBackForwardNavigationGestures={true}
-        startInLoadingState={true}
-        renderLoading={() => (
-          <ActivityIndicator
-            color="black"
-            size="large"
-            style={styles.container}
-          />
-        )}
       />
     </View>
   )

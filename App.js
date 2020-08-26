@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { StyleSheet, BackHandler, SafeAreaView } from 'react-native'
+import { StyleSheet, BackHandler, View, Share, Alert } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import * as Haptics from 'expo-haptics'
 
@@ -35,8 +36,9 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        style="dark"
+      <View style={styles.container}>
+        <StatusBar
+          style="dark"
         translucent={false} // Android
         backgroundColor={colors.bg_white}
       />
@@ -96,7 +98,23 @@ export default function App() {
           if (webviewRef.current) webviewRef.current.goForward()
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
         }}
-      />
+        handleShare={async () => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          try {
+              await Share.share({
+                message: `I'm using Wink to browse the web: ${currentUrl}`,
+                url: currentUrl
+              })
+            } catch (error) {
+              Alert.alert(error.message)
+            }
+          }}
+          handleReload={() => {
+            webviewRef.current.reload()
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          }}
+        />
+      </View>
     </SafeAreaView>
   )
 }
