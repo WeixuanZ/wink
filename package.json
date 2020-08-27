@@ -10,6 +10,7 @@
     "release": "standard-version --sign"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "~1.11.0",
     "expo": "~38.0.8",
     "expo-camera": "~8.3.1",
     "expo-face-detector": "~8.2.1",

@@ -7,12 +7,15 @@ import * as Haptics from 'expo-haptics'
 import Searchbar from './Searchbar.js'
 import FaceDetector from './FaceDetector.js'
 
-import colors, { faceRecBtnColors } from '../config/colors.js'
+import { useStoredState } from '../lib/storage.js'
 import faceAction from '../lib/face.js'
+import colors, { faceRecBtnColors } from '../config/colors.js'
 
 export default function Toolbar({ seachbarFocused, webviewRef, ...props }) {
   // true|false: whether face detection is enabled
-  const [faceTrackState, setFaceTrackState] = useState(false)
+  const [faceTrackState, setFaceTrackState] = useStoredState('@facetrack_state', true)
+  // true|false: whether have camera permission
+  const [permissionGranted, setPermissionGranted] = useState(false)
   // 'noPermission'|'noFace'|'normal': the state of face detection
   const [faceState, setFaceState] = useState('noFace')
 
@@ -22,7 +25,7 @@ export default function Toolbar({ seachbarFocused, webviewRef, ...props }) {
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync()
-      setFaceTrackState(status === 'granted')
+      setPermissionGranted(status === 'granted')
       setFaceState(status === 'granted' ? 'noFace' : 'noPermission')
     })()
   }, [])
@@ -64,7 +67,7 @@ export default function Toolbar({ seachbarFocused, webviewRef, ...props }) {
         </TouchableOpacity>
       )}
       <FaceDetector
-        faceTrackState={faceTrackState}
+        {...{ faceTrackState, permissionGranted }}
         handleMountError={() => setFaceState('noPermission')}
         handleFacesDetected={({ faces }) => {
           if (faces[0] === undefined) {

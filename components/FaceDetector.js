@@ -5,10 +5,12 @@ import * as FaceDetector from 'expo-face-detector'
 
 export default function Face({
   faceTrackState,
+  permissionGranted,
   handleMountError,
   handleFacesDetected
 }) {
-  if (!faceTrackState) { // remove camera component to turn it off
+  if (!faceTrackState || !permissionGranted) {
+    // remove camera component to turn it off
     return <View />
   }
 
