@@ -17,13 +17,13 @@
 
 ---
 
-Wink (・ω<) is a simple React Native app developed for a friend, who suffered from De Quervain Tenosynovitis. It enables you to scroll by winking 😉.
+Wink (・ω<) is a React Native app developed for a friend, who suffered from De Quervain Tenosynovitis. It enables you to scroll by winking 😉.
 
 This app is not designed to be fully touch-free, but to reduce the amount of scrolling required when browsing those infinitely long social media feeds. If you have an Apple device with True Depth Camera, using ARKit for eye-tracking (e.g. the amazing _Hawkeye Access_) could be a more appealing solution.
 
 Still in alpha...
 
-- [ ] Bookmark system
+- [x] Bookmark system
 - [ ] Orientation control
 - [ ] SMH detection
 - [ ] Speech-to-text
@@ -53,6 +53,8 @@ You can turn blink detection off by pressing the face icon in the tool bar.
   - if no camera permission: red
   - if no face detected: yellow
   - working: green
+
+You can add or remove bookmarks by clicking the bookmark button in the navigation bar, whose state shows whether the current url is already bookmarked. The bookmarks are stored on device, and appear as a list when the search bar is focused.
 
 ## License
 

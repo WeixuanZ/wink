@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, StyleSheet } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Camera } from 'expo-camera'
@@ -11,15 +11,13 @@ import { useStoredState } from '../lib/storage.js'
 import faceAction from '../lib/face.js'
 import colors, { faceRecBtnColors } from '../config/colors.js'
 
-export default function Toolbar({ seachbarFocused, webviewRef, ...props }) {
+export default function Toolbar({ seachbarFocused, searchbarRef, webviewRef, ...props }) {
   // true|false: whether face detection is enabled
   const [faceTrackState, setFaceTrackState] = useStoredState('@facetrack_state', true)
   // true|false: whether have camera permission
   const [permissionGranted, setPermissionGranted] = useState(false)
   // 'noPermission'|'noFace'|'normal': the state of face detection
   const [faceState, setFaceState] = useState('noFace')
-
-  const searchbarRef = useRef(null)
 
   // check camera permission
   useEffect(() => {

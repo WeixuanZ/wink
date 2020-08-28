@@ -3,12 +3,12 @@ import { View, StyleSheet } from 'react-native'
 import ProgressWebView from 'react-native-progress-webview'
 
 import colors from '../config/colors.js'
-import { smoothScroll } from '../lib/scroll.js'
 
 export default function Frame({
   currentUrl,
   webviewRef,
   handleStateChange,
+  handleLoad,
   handleRequest
 }) {
   return (
@@ -18,7 +18,7 @@ export default function Frame({
         ref={webviewRef}
         onNavigationStateChange={handleStateChange}
         onShouldStartLoadWithRequest={handleRequest}
-        onLoad={() => webviewRef.current.injectJavaScript(smoothScroll)}
+        onLoad={handleLoad}
         allowsFullscreenVideo={true}
         allowsInlineMediaPlayback={true}
         allowsBackForwardNavigationGestures={true}

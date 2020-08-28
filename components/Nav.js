@@ -1,16 +1,23 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Ionicons, MaterialCommunityIcons, Feather, FontAwesome } from '@expo/vector-icons'
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  Feather,
+  FontAwesome
+} from '@expo/vector-icons'
 
 import colors from '../config/colors.js'
 
 export default function Nav({
   canGoBack,
   canGoForward,
+  bookmarked,
   handleGoBack,
   handleGoForward,
   handleShare,
-  handleReload
+  handleReload,
+  handleBookmark
 }) {
   return (
     <View style={styles.container}>
@@ -33,23 +40,18 @@ export default function Nav({
         </TouchableOpacity>
       </View>
       <View style={styles.btns}>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={handleShare}
-        >
+        <TouchableOpacity style={styles.btn} onPress={handleReload}>
+          <MaterialCommunityIcons name="reload" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={handleShare}>
           <Feather name="share" size={24} color="black" />
         </TouchableOpacity>
-        {/* <TouchableOpacity
-          style={styles.btn}
-        >
-          <FontAwesome name="bookmark" size={24} color="black" />
-          <FontAwesome name="bookmark-o" size={24} color="black" />
-        </TouchableOpacity> */}
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={handleReload}
-        >
-          <MaterialCommunityIcons name="reload" size={24} color="black" />
+        <TouchableOpacity style={styles.btn} onPress={handleBookmark}>
+          {bookmarked ? (
+            <FontAwesome name="bookmark" size={24} color="black" />
+          ) : (
+            <FontAwesome name="bookmark-o" size={24} color="black" />
+          )}
         </TouchableOpacity>
       </View>
     </View>

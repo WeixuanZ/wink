@@ -5,11 +5,17 @@ import { StatusBar } from 'expo-status-bar'
 import * as Haptics from 'expo-haptics'
 
 import Toolbar from './components/Toolbar.js'
+import Bookmarks from './components/Bookmarks.js'
 import Frame from './components/Frame.js'
 import Nav from './components/Nav.js'
 
+import { useStoredState } from './lib/storage.js'
+import { smoothScroll } from './lib/scroll.js'
 import { formatQuery, getDisplayStr } from './lib/urlHelper.js'
+import { bookmarkExists, addBookmark, removeBookmark } from './lib/bookmarks.js'
+
 import colors from './config/colors.js'
+import defaultBookmarks from './config/defaultBookmarks.js'
 
 export default function App() {
   const [canGoBack, setCanGoBack] = useState(false)
@@ -17,8 +23,14 @@ export default function App() {
   const [currentUrl, setCurrentUrl] = useState('https://www.google.com')
   const [currentSearchbar, setCurrentSearchbar] = useState('')
   const [seachbarFocused, setSeachbarFocused] = useState(true)
+  const [bookmarked, setBookmarked] = useState(false)
+  const [bookmarks, setBookmarks] = useStoredState(
+    '@bookmarks',
+    defaultBookmarks
+  )
 
   const webviewRef = useRef(null)
+  const searchbarRef = useRef(null)
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -46,6 +58,7 @@ export default function App() {
           {...{
             currentSearchbar,
             seachbarFocused,
+            searchbarRef,
             webviewRef
           }}
           handleChangeText={setCurrentSearchbar}
@@ -73,6 +86,10 @@ export default function App() {
               setCurrentSearchbar(getDisplayStr(navState.url))
             }
           }}
+          handleLoad={() => {
+            webviewRef.current.injectJavaScript(smoothScroll)
+            setBookmarked(bookmarkExists(currentUrl, bookmarks))
+          }}
           handleRequest={(request) => {
             // prevent links from opening apps
             if (
@@ -91,8 +108,21 @@ export default function App() {
             return true
           }}
         />
+        {seachbarFocused && (
+          <Bookmarks
+            bookmarks={bookmarks}
+            handleSpacePress={() => searchbarRef.current.blur()}
+            handleBookmarkPress={(url) => {
+              searchbarRef.current.blur()
+              setCurrentUrl(url)
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              )
+            }}
+          />
+        )}
         <Nav
-          {...{ canGoBack, canGoForward }}
+          {...{ canGoBack, canGoForward, bookmarked }}
           handleGoBack={() => {
             if (webviewRef.current) webviewRef.current.goBack()
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
@@ -114,6 +144,16 @@ export default function App() {
           }}
           handleReload={() => {
             webviewRef.current.reload()
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+          }}
+          handleBookmark={() => {
+            if (bookmarked) {
+              setBookmarks(removeBookmark(currentUrl, bookmarks))
+              setBookmarked(false)
+            } else {
+              setBookmarks(addBookmark(currentUrl, bookmarks))
+              setBookmarked(true)
+            }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
           }}
         />
