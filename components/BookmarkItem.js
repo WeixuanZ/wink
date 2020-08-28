@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: 50,
-    backgroundColor: colors.bg_white,
+    backgroundColor: colors.bg_gray,
     borderRadius: 10,
     marginHorizontal: 10,
     marginVertical: 5,

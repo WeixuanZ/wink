@@ -11,8 +11,8 @@ import Nav from './components/Nav.js'
 
 import { useStoredState } from './lib/storage.js'
 import { smoothScroll } from './lib/scroll.js'
-import { formatQuery, getDisplayStr } from './lib/urlHelper.js'
-import { bookmarkExists, addBookmark, removeBookmark } from './lib/bookmarks.js'
+import { formatQuery, getDisplayStr } from './lib/url.js'
+import { bookmarkExists, addBookmark, removeBookmark } from './lib/bookmark.js'
 
 import colors from './config/colors.js'
 import defaultBookmarks from './config/defaultBookmarks.js'
@@ -135,7 +135,7 @@ export default function App() {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
             try {
               await Share.share({
-                message: `I'm using Wink to browse the web: ${currentUrl}`,
+                message: `I'm browsing the web using Wink: ${currentUrl}`,
                 url: currentUrl
               })
             } catch (error) {

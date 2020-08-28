@@ -3129,6 +3129,13 @@ expo-asset@~8.1.7:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-blur@~8.1.2:
+  version "8.1.2"
+  resolved "https://registry.yarnpkg.com/expo-blur/-/expo-blur-8.1.2.tgz#d8f12d6492f3df264a1eaae8a15c22b3a283375e"
+  integrity sha512-Z/NCe59rDR9D54FEZNisRybZwihfE9EQfolgchmra9wt89eryXMtxR9ciHn6n0F/BImOiS6UhzQZIE4SRs76Eg==
+  dependencies:
+    prop-types "^15.6.0"
+
 expo-camera@~8.3.1:
   version "8.3.1"
   resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-8.3.1.tgz#e17c080c4aafd71f66495c2b6dfc53dcd31b0368"

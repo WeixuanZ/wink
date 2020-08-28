@@ -73,6 +73,9 @@ export default function Toolbar({ seachbarFocused, searchbarRef, webviewRef, ...
             setFaceState('noFace')
             return
           }
+          if (seachbarFocused) {
+            return
+          }
           faceAction(faces[0], setFaceState, webviewRef, searchbarRef)
         }}
       />

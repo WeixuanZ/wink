@@ -7,6 +7,7 @@ import {
   StyleSheet
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { BlurView } from 'expo-blur'
 
 import BookmarkItem from './BookmarkItem.js'
 import { removeItem } from '../lib/storage.js'
@@ -25,16 +26,17 @@ export default function Bookmarks({
   return (
     <TouchableWithoutFeedback onPress={handleSpacePress}>
       <View style={styles.container}>
-        <FlatList
-          style={styles.box}
-          data={bookmarks}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.url}
-          numColumns={2}
-          pagingEnabled={true}
-          pinchGestureEnabled={false}
-          keyboardShouldPersistTaps="always"
-        ></FlatList>
+        <BlurView intensity={100} style={styles.box}>
+          <FlatList
+            data={bookmarks}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.url}
+            numColumns={2}
+            pagingEnabled={true}
+            pinchGestureEnabled={false}
+            keyboardShouldPersistTaps="always"
+          />
+        </BlurView>
         <TouchableOpacity
           style={styles.resetBtn}
           onPress={() => removeItem('@bookmarks')}
@@ -56,7 +58,6 @@ const styles = StyleSheet.create({
   },
   box: {
     flexGrow: 0,
-    backgroundColor: colors.bg_gray,
     borderRadius: 10,
     margin: 10,
     padding: 10
