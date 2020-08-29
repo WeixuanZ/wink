@@ -11,7 +11,7 @@ import Nav from './components/Nav.js'
 
 import { useStoredState } from './lib/storage.js'
 import { smoothScroll } from './lib/scroll.js'
-import { formatQuery, getDisplayStr } from './lib/url.js'
+import { formatQuery, getBaseUrl, getDisplayStr } from './lib/url.js'
 import { bookmarkExists, addBookmark, removeBookmark } from './lib/bookmark.js'
 
 import colors from './config/colors.js'
@@ -117,6 +117,31 @@ export default function App() {
               setCurrentUrl(url)
               Haptics.notificationAsync(
                 Haptics.NotificationFeedbackType.Success
+              )
+            }}
+            handleDelete={(url) => {
+              setBookmarks(removeBookmark(url, bookmarks))
+              // update bookmark button state if current page is removed from bookmarks
+              if (getBaseUrl(currentUrl) == url.slice(8)) {
+                setBookmarked(false)
+              }
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            }}
+            handleReset={() => {
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Warning
+              )
+              Alert.alert(
+                'Reset Bookmarks',
+                'Are you sure that you want to reset the bookmarks to default ones?',
+                [
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel'
+                  },
+                  { text: 'OK', onPress: () => setBookmarks(defaultBookmarks) }
+                ]
               )
             }}
           />
