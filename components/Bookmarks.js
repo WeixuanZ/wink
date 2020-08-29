@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import {
   View,
   TouchableWithoutFeedback,
   FlatList,
   TouchableOpacity,
+  Animated,
   Dimensions,
   StyleSheet
 } from 'react-native'
@@ -27,6 +28,15 @@ export default function Bookmarks({
   handleReset
 }) {
   const [editing, setEditing] = useState(false)
+  const fadeAnim = useRef(new Animated.Value(0)).current
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true
+    }).start()
+  }, [fadeAnim])
 
   const windowWidth = Dimensions.get('window').width
   const numColumns = Math.floor(windowWidth / 150)
@@ -44,7 +54,7 @@ export default function Bookmarks({
 
   return (
     <TouchableWithoutFeedback onPress={handleSpacePress}>
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
         <BlurView intensity={100} tint="dark" style={styles.box}>
           <FlatList
             data={bookmarks}
@@ -85,7 +95,7 @@ export default function Bookmarks({
             </TouchableOpacity>
           </View>
         </BlurView>
-      </View>
+      </Animated.View>
     </TouchableWithoutFeedback>
   )
 }
