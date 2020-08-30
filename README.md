@@ -1,4 +1,4 @@
-![Wink](/assets/head.png)
+![Wink](/docs/head.png)
 
 <p align="center">
     <a aria-label="expo" href="https://expo.io/" target="_blank">
@@ -19,19 +19,15 @@
 
 Wink (・ω<) is a React Native app developed for a friend, who suffered from De Quervain Tenosynovitis. It enables you to scroll by winking 😉.
 
+<p align="center">
+  <img alt="Wink" src="/docs/1.png" width="200">
+</p>
+
 This app is not designed to be fully touch-free, but to reduce the amount of scrolling required when browsing those infinitely long social media feeds. If you have an Apple device with True Depth Camera, using ARKit for eye-tracking (e.g. the amazing _Hawkeye Access_) could be a more appealing solution.
-
-Still in alpha...
-
-- [x] Bookmark system
-- [ ] Orientation control
-- [ ] SMH detection
-- [ ] Speech-to-text
-- [ ] Nose tracking using Facemesh 🤨
 
 ## Installation
 
-If you are an Android user, you can use Wink through Expo Client, simply go to https://expo.io/@weixuanz/wink.
+If you are an Android user, you can use Wink through Expo Client, simply go to https://expo.io/@weixuanz/wink. Alternatively, you can install using APK from the [latest release](https://github.com/WeixuanZ/wink/releases/latest).
 
 Things are more complicated if you are using iOS, since I haven't paid for the Apple Developer Program 🤦‍♂️. Currently, you can clone this repository and use expo-cli to serve locally.
 
@@ -48,13 +44,15 @@ Close right eye to scroll down and left to scroll up, keep it closed for continu
 
 You can turn blink detection off by pressing the face icon in the tool bar.
 
-* If detection is off, it is black
-* If detection is on:
-  - if no camera permission: red
-  - if no face detected: yellow
-  - working: green
+<p align="center">
+  <img alt="Face icon states" src="/docs/face.png" width="400">
+</p>
 
 You can add or remove bookmarks by clicking the bookmark button in the navigation bar, whose state shows whether the current url is already bookmarked. The bookmarks are stored on device, and appear as a list when the search bar is focused.
+
+<p align="center">
+  <img alt="Wink" src="/docs/2.png" width="200">
+</p>
 
 ## License
 
