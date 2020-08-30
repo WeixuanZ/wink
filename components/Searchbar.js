@@ -45,7 +45,6 @@ export default function SearchBar({
         keyboardAppearance="light"
         keyboardType="web-search"
         textContentType="URL"
-        autoFocus={true}
         clearTextOnFocus={true} // iOS only
         selectTextOnFocus={true} // for Android
         enablesReturnKeyAutomatically={true}

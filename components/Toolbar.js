@@ -25,6 +25,7 @@ export default function Toolbar({ seachbarFocused, searchbarRef, webviewRef, ...
       const { status } = await Camera.requestPermissionsAsync()
       setPermissionGranted(status === 'granted')
       setFaceState(status === 'granted' ? 'noFace' : 'noPermission')
+      searchbarRef.current.focus()
     })()
   }, [])
 
