@@ -9,13 +9,11 @@ import Bookmarks from './components/Bookmarks.js'
 import Frame from './components/Frame.js'
 import Nav from './components/Nav.js'
 
-import { useStoredState } from './lib/storage.js'
 import { smoothScroll } from './lib/scroll.js'
 import { formatQuery, getBaseUrl, getDisplayStr } from './lib/url.js'
-import { bookmarkExists, addBookmark, removeBookmark } from './lib/bookmark.js'
+import { bookmarkExists, useBookmarks } from './lib/bookmark.js'
 
 import colors from './config/colors.js'
-import defaultBookmarks from './config/defaultBookmarks.js'
 
 export default function App() {
   const [canGoBack, setCanGoBack] = useState(false)
@@ -24,10 +22,7 @@ export default function App() {
   const [currentSearchbar, setCurrentSearchbar] = useState('')
   const [seachbarFocused, setSeachbarFocused] = useState(true)
   const [bookmarked, setBookmarked] = useState(false)
-  const [bookmarks, setBookmarks] = useStoredState(
-    '@bookmarks',
-    defaultBookmarks
-  )
+  const [bookmarks, dispatchBookmarks] = useBookmarks()
 
   const webviewRef = useRef(null)
   const searchbarRef = useRef(null)
@@ -120,7 +115,7 @@ export default function App() {
               )
             }}
             handleDelete={(url) => {
-              setBookmarks(removeBookmark(url, bookmarks))
+              dispatchBookmarks({type: 'REMOVE', payload: url})
               // update bookmark button state if current page is removed from bookmarks
               if (getBaseUrl(currentUrl) == url.slice(8)) {
                 setBookmarked(false)
@@ -140,7 +135,7 @@ export default function App() {
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel'
                   },
-                  { text: 'OK', onPress: () => setBookmarks(defaultBookmarks) }
+                  { text: 'OK', onPress: () => dispatchBookmarks({type: 'RESET'}) }
                 ]
               )
             }}
@@ -173,10 +168,10 @@ export default function App() {
           }}
           handleBookmark={() => {
             if (bookmarked) {
-              setBookmarks(removeBookmark(currentUrl, bookmarks))
+              dispatchBookmarks({type: 'REMOVE', payload: currentUrl})
               setBookmarked(false)
             } else {
-              setBookmarks(addBookmark(currentUrl, bookmarks))
+              dispatchBookmarks({type: 'ADD', payload: currentUrl})
               setBookmarked(true)
             }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
