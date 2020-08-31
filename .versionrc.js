@@ -7,6 +7,14 @@ module.exports = {
       filename: 'app.json',
       updater: require.resolve('standard-version-expo'),
     },
+    {
+      filename: 'app.json',
+      updater: require.resolve('standard-version-expo/android/code'),
+    },
+    {
+      filename: 'app.json',
+      updater: require.resolve('standard-version-expo/ios'),
+    }
   ],
   types: [
     {"type": "feat", "section": "Features"},

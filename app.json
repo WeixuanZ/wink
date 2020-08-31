@@ -21,10 +21,13 @@
       "assets/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.weixuanz.wink",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.weixuanz.wink",
+      "versionCode": 380010000,
       "softwareKeyboardLayoutMode": "pan"
     }
   }
