@@ -48,6 +48,12 @@ You can turn blink detection off by pressing the face icon in the tool bar.
   <img alt="Face icon states" src="/docs/face.png" width="400">
 </p>
 
+Adjust wink detection sensitivity by long pressing the face icon.
+
+<p align="center">
+  <img alt="Wink detection slider" src="docs/4.png" width="200">
+</p>
+
 You can add or remove bookmarks by clicking the bookmark button in the navigation bar, whose state shows whether the current url is already bookmarked. The bookmarks are stored on device, and appear as a list when the search bar is focused.
 
 <p align="center">
