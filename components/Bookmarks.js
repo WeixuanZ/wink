@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
   box: {
     flexGrow: 0,
     borderRadius: 10,
+    overflow: 'hidden',
     margin: 10,
     padding: 10
   },

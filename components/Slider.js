@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   box: {
     flex: 1,
     borderRadius: 10,
+    overflow: 'hidden',
     margin: 10,
     padding: 10,
     alignItems: 'center',
