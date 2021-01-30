@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/WeixuanZ/wink/compare/v1.0.0...v1.1.0) (2021-01-30)
+
+
+### Features
+
+* Wink detection sensitivity slider ([8a0dbe7](https://github.com/WeixuanZ/wink/commit/8a0dbe760c27111bd0227e834a058705c6b51644))
+
+
+### Bug Fixes
+
+* BlueView border radius ([2de73c7](https://github.com/WeixuanZ/wink/commit/2de73c7c41e45ddda26e2bfd9ab1e520b90c52fe))
+* Failure when url contains https or http prefix ([980e5a6](https://github.com/WeixuanZ/wink/commit/980e5a6a90da1119c60c34a5373d330e82fda41b))
+* Winks or blinks affect typing ([acb7e50](https://github.com/WeixuanZ/wink/commit/acb7e50b968d724159207f64c10abbf62264d47a))
+
 ## [1.0.0](https://github.com/WeixuanZ/wink/compare/v1.0.0-alpha.2...v1.0.0) (2020-08-30)
 
 

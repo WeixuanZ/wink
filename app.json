@@ -2,7 +2,7 @@
   "expo": {
     "name": "wink",
     "slug": "wink",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "privacy": "public",
     "description": "A web browser controlled by winking",
     "githubUrl": "https://github.com/WeixuanZ/wink",
@@ -22,12 +22,12 @@
     ],
     "ios": {
       "bundleIdentifier": "com.weixuanz.wink",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.1.0",
       "supportsTablet": true
     },
     "android": {
       "package": "com.weixuanz.wink",
-      "versionCode": 380010000,
+      "versionCode": 400010100,
       "softwareKeyboardLayoutMode": "pan"
     }
   }
