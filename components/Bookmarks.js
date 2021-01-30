@@ -79,7 +79,7 @@ export default function Bookmarks({
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                setEditing(!editing)
+                setEditing(editing => !editing)
                 Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
               }}
             >
