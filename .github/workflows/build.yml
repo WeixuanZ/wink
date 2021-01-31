@@ -17,7 +17,7 @@ jobs:
         uses: nzws/turtle-action@master
         with:
           build-os: 'android'
-          expo-sdk-version: '38.0.0' # your SDK version
+          expo-sdk-version: '40.0.0' # your SDK version
         env:
           EXPO_USERNAME: ${{ secrets.EXPO_CLI_USERNAME }}
           EXPO_PASSWORD: ${{ secrets.EXPO_CLI_PASSWORD }}

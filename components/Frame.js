@@ -4,7 +4,10 @@ import ProgressWebView from 'react-native-progress-webview'
 
 import colors from '../config/colors.js'
 
+import introHTML from '../assets/intro.js'
+
 export default function Frame({
+  isFirstLaunch,
   currentUrl,
   webviewRef,
   handleStateChange,
@@ -14,7 +17,9 @@ export default function Frame({
   return (
     <View style={styles.container}>
       <ProgressWebView
-        source={{ uri: currentUrl }}
+        source={
+          isFirstLaunch === 'false' ? { uri: currentUrl } : { html: introHTML }
+        }
         ref={webviewRef}
         onNavigationStateChange={handleStateChange}
         onShouldStartLoadWithRequest={handleRequest}

@@ -10,17 +10,31 @@ import Frame from './components/Frame.js'
 import Nav from './components/Nav.js'
 
 import { smoothScroll } from './lib/scroll.js'
+import { useStoredState } from './lib/storage.js'
 import { formatQuery, getBaseUrl, getDisplayStr } from './lib/url.js'
 import { bookmarkExists, useBookmarks } from './lib/bookmark.js'
 
 import colors from './config/colors.js'
 
 export default function App() {
+  // App
+  const [isFirstLaunch, setIsFirstLaunch] = useStoredState(
+    '@isFirstLaunch',
+    'true'
+  )
+  const launched = () => {
+    if (isFirstLaunch === 'true') {
+      setIsFirstLaunch('false')
+    }
+  }
+  // WebView
   const [canGoBack, setCanGoBack] = useState(false)
   const [canGoForward, setCanGoForward] = useState(false)
   const [currentUrl, setCurrentUrl] = useState('https://www.google.com')
+  // Searchbar
   const [currentSearchbar, setCurrentSearchbar] = useState('')
   const [seachbarFocused, setSeachbarFocused] = useState(true)
+  // Bookmarks
   const [bookmarked, setBookmarked] = useState(false)
   const [bookmarks, dispatchBookmarks] = useBookmarks()
 
@@ -58,6 +72,7 @@ export default function App() {
           }}
           handleChangeText={setCurrentSearchbar}
           handleSubmit={({ nativeEvent: { text } }) => {
+            launched()
             setCurrentUrl(formatQuery(text))
             Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
           }}
@@ -67,16 +82,21 @@ export default function App() {
           }}
           handleBlur={() => {
             setSeachbarFocused(false)
-            setCurrentSearchbar(getDisplayStr(currentUrl)) // restore if not submitted
+            setCurrentSearchbar(
+              isFirstLaunch === 'true' ? '' : getDisplayStr(currentUrl)
+            ) // restore currentUrl if not submitted, but keep blank if displaying into page
           }}
         />
         <Frame
-          {...{ currentUrl, webviewRef }}
+          {...{ currentUrl, webviewRef, isFirstLaunch }}
           handleStateChange={(navState) => {
             setCanGoBack(navState.canGoBack)
             setCanGoForward(navState.canGoForward)
-            setCurrentUrl(navState.url)
-            // prevent text update when textinput is in focus
+            if (navState.url === 'about:blank') {
+              setCurrentSearchbar('How to use')
+              return  // do not chnage currentUrl to about:blank
+            }
+            setCurrentUrl(navState.url) // prevent text update when textinput is in focus
             if (!seachbarFocused) {
               setCurrentSearchbar(getDisplayStr(navState.url))
             }
@@ -108,6 +128,7 @@ export default function App() {
             bookmarks={bookmarks}
             handleSpacePress={() => searchbarRef.current.blur()}
             handleBookmarkPress={(url) => {
+              launched()
               searchbarRef.current.blur()
               setCurrentUrl(url)
               Haptics.notificationAsync(
@@ -115,7 +136,7 @@ export default function App() {
               )
             }}
             handleDelete={(url) => {
-              dispatchBookmarks({type: 'REMOVE', payload: url})
+              dispatchBookmarks({ type: 'REMOVE', payload: url })
               // update bookmark button state if current page is removed from bookmarks
               if (getBaseUrl(currentUrl) == url.slice(8)) {
                 setBookmarked(false)
@@ -135,7 +156,10 @@ export default function App() {
                     onPress: () => console.log('Cancel Pressed'),
                     style: 'cancel'
                   },
-                  { text: 'OK', onPress: () => dispatchBookmarks({type: 'RESET'}) }
+                  {
+                    text: 'OK',
+                    onPress: () => dispatchBookmarks({ type: 'RESET' })
+                  }
                 ]
               )
             }}
@@ -163,15 +187,16 @@ export default function App() {
             }
           }}
           handleReload={() => {
+            if (isFirstLaunch) return
             webviewRef.current.reload()
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
           }}
           handleBookmark={() => {
             if (bookmarked) {
-              dispatchBookmarks({type: 'REMOVE', payload: currentUrl})
+              dispatchBookmarks({ type: 'REMOVE', payload: currentUrl })
               setBookmarked(false)
             } else {
-              dispatchBookmarks({type: 'ADD', payload: currentUrl})
+              dispatchBookmarks({ type: 'ADD', payload: currentUrl })
               setBookmarked(true)
             }
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
