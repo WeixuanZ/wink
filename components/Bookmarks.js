@@ -14,9 +14,9 @@ import {
   MaterialCommunityIcons
 } from '@expo/vector-icons'
 import { BlurView } from 'expo-blur'
-import * as Haptics from 'expo-haptics'
 
 import BookmarkItem from './BookmarkItem.js'
+import { lightHaptics } from '../lib/alert.js'
 
 import colors from '../config/colors.js'
 
@@ -46,7 +46,7 @@ export default function Bookmarks({
       handleBookmarkLongPress={() => {
         if (editing) return
         setEditing(true)
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+        lightHaptics()
       }}
       {...{ handleBookmarkPress, editing, handleDelete, ...item }}
     />
@@ -79,8 +79,8 @@ export default function Bookmarks({
             <TouchableOpacity
               style={styles.btn}
               onPress={() => {
-                setEditing(editing => !editing)
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+                setEditing((editing) => !editing)
+                lightHaptics()
               }}
             >
               {editing ? (

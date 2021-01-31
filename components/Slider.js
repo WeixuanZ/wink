@@ -2,26 +2,23 @@ import React, { useEffect, useRef } from 'react'
 import { View, Text, Animated, StyleSheet } from 'react-native'
 import Slider from '@react-native-community/slider'
 import { BlurView } from 'expo-blur'
-import * as Haptics from 'expo-haptics'
 
+import { lightHaptics } from '../lib/alert.js'
 import colors from '../config/colors.js'
 
-export default function CustomSlider({
-  value,
-  handleMount,
-  handleSetValue
-}) {
+export default function CustomSlider({ value, handleMount, handleSetValue }) {
   const timeoutRef = useRef(null)
   const yAnim = useRef(new Animated.Value(-60)).current
 
-  const unmountTimeout = (timeout, duration = 200) => setTimeout(() => {
-    Animated.timing(yAnim, {
-      toValue: -60,
-      duration: duration,
-      useNativeDriver: true
-    }).start()
-    setTimeout(() => handleMount(false), duration)
-  }, timeout)
+  const unmountTimeout = (timeout, duration = 200) =>
+    setTimeout(() => {
+      Animated.timing(yAnim, {
+        toValue: -60,
+        duration: duration,
+        useNativeDriver: true
+      }).start()
+      setTimeout(() => handleMount(false), duration)
+    }, timeout)
 
   useEffect(() => {
     timeoutRef.current = unmountTimeout(3000)
@@ -45,9 +42,7 @@ export default function CustomSlider({
             handleSetValue(value)
             timeoutRef.current = unmountTimeout(2000)
           }}
-          onValueChange={() =>
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-          }
+          onValueChange={lightHaptics}
           minimumValue={0}
           maximumValue={2}
           step={1}

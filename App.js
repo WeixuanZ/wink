@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import { StyleSheet, BackHandler, View, Share, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
-import * as Haptics from 'expo-haptics'
 
 import Toolbar from './components/Toolbar.js'
 import Bookmarks from './components/Bookmarks.js'
@@ -13,6 +12,7 @@ import { smoothScroll } from './lib/scroll.js'
 import { useStoredState } from './lib/storage.js'
 import { formatQuery, getBaseUrl, getDisplayStr } from './lib/url.js'
 import { bookmarkExists, useBookmarks } from './lib/bookmark.js'
+import { alert, lightHaptics, successHaptics } from './lib/alert.js'
 
 import colors from './config/colors.js'
 
@@ -74,11 +74,11 @@ export default function App() {
           handleSubmit={({ nativeEvent: { text } }) => {
             launched()
             setCurrentUrl(formatQuery(text))
-            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+            successHaptics()
           }}
           handleFocus={() => {
             setSeachbarFocused(true)
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            lightHaptics()
           }}
           handleBlur={() => {
             setSeachbarFocused(false)
@@ -94,12 +94,10 @@ export default function App() {
             setCanGoForward(navState.canGoForward)
             if (navState.url === 'about:blank') {
               setCurrentSearchbar('How to use')
-              return  // do not chnage currentUrl to about:blank
+              return // do not chnage currentUrl to about:blank
             }
             setCurrentUrl(navState.url) // prevent text update when textinput is in focus
-            if (!seachbarFocused) {
-              setCurrentSearchbar(getDisplayStr(navState.url))
-            }
+            if (!seachbarFocused) setCurrentSearchbar(getDisplayStr(navState.url))
           }}
           handleLoad={() => {
             webviewRef.current.injectJavaScript(smoothScroll)
@@ -131,36 +129,19 @@ export default function App() {
               launched()
               searchbarRef.current.blur()
               setCurrentUrl(url)
-              Haptics.notificationAsync(
-                Haptics.NotificationFeedbackType.Success
-              )
+              successHaptics()
             }}
             handleDelete={(url) => {
               dispatchBookmarks({ type: 'REMOVE', payload: url })
               // update bookmark button state if current page is removed from bookmarks
-              if (getBaseUrl(currentUrl) == url.slice(8)) {
-                setBookmarked(false)
-              }
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+              if (getBaseUrl(currentUrl) == url.slice(8)) setBookmarked(false)
+              lightHaptics()
             }}
             handleReset={() => {
-              Haptics.notificationAsync(
-                Haptics.NotificationFeedbackType.Warning
-              )
-              Alert.alert(
+              alert(
                 'Reset Bookmarks',
                 'Are you sure that you want to reset the bookmarks to default ones?',
-                [
-                  {
-                    text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel'
-                  },
-                  {
-                    text: 'OK',
-                    onPress: () => dispatchBookmarks({ type: 'RESET' })
-                  }
-                ]
+                () => dispatchBookmarks({ type: 'RESET' })
               )
             }}
           />
@@ -169,14 +150,14 @@ export default function App() {
           {...{ canGoBack, canGoForward, bookmarked }}
           handleGoBack={() => {
             if (webviewRef.current) webviewRef.current.goBack()
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            lightHaptics()
           }}
           handleGoForward={() => {
             if (webviewRef.current) webviewRef.current.goForward()
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            lightHaptics()
           }}
           handleShare={async () => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            lightHaptics()
             try {
               await Share.share({
                 message: `I'm browsing the web using Wink: ${currentUrl}`,
@@ -189,7 +170,7 @@ export default function App() {
           handleReload={() => {
             if (isFirstLaunch) return
             webviewRef.current.reload()
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            lightHaptics()
           }}
           handleBookmark={() => {
             if (bookmarked) {
@@ -199,7 +180,7 @@ export default function App() {
               dispatchBookmarks({ type: 'ADD', payload: currentUrl })
               setBookmarked(true)
             }
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+            lightHaptics()
           }}
         />
       </View>

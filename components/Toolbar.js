@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { View, TouchableOpacity, Keyboard, StyleSheet } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Camera } from 'expo-camera'
-import * as Haptics from 'expo-haptics'
 
 import Searchbar from './Searchbar.js'
 import FaceDetector from './FaceDetector.js'
 import Slider from './Slider.js'
 
-import { useStoredState } from '../lib/storage.js'
+import { useStoredState, clearAll } from '../lib/storage.js'
 import faceAction from '../lib/face.js'
+import { alert, lightHaptics, mediumHaptics } from '../lib/alert.js'
+
 import colors, { faceRecBtnColors } from '../config/colors.js'
 
 export default function Toolbar({
@@ -36,7 +37,7 @@ export default function Toolbar({
   )
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       // check camera permission
       const { status } = await Camera.requestPermissionsAsync()
       setPermissionGranted(status === 'granted')
@@ -66,7 +67,14 @@ export default function Toolbar({
             style={styles.btn}
             onPress={() => {
               searchbarRef.current.blur()
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+              lightHaptics()
+            }}
+            onLongPress={() => {
+              alert(
+                'Reset All Local Stroage',
+                'Are you sure that you want to reset all local stoage? The "How to use" page will be displayed again upon next launch.',
+                clearAll
+              )
             }}
           >
             <MaterialCommunityIcons
@@ -80,11 +88,11 @@ export default function Toolbar({
             style={styles.btn}
             onPress={() => {
               setFaceTrackState(!faceTrackState) // toggle face detection
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+              lightHaptics()
             }}
             onLongPress={() => {
               setSliderMounted(true)
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+              mediumHaptics()
             }}
           >
             <MaterialCommunityIcons
