@@ -17,9 +17,7 @@ export default function Frame({
   return (
     <View style={styles.container}>
       <ProgressWebView
-        source={
-          isFirstLaunch === 'false' ? { uri: currentUrl } : { html: introHTML }
-        }
+        source={isFirstLaunch ? { html: introHTML } : { uri: currentUrl }}
         ref={webviewRef}
         onNavigationStateChange={handleStateChange}
         onShouldStartLoadWithRequest={handleRequest}

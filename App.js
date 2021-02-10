@@ -20,12 +20,10 @@ export default function App() {
   // App
   const [isFirstLaunch, setIsFirstLaunch] = useStoredState(
     '@isFirstLaunch',
-    'true'
+    true
   )
   const launched = () => {
-    if (isFirstLaunch === 'true') {
-      setIsFirstLaunch('false')
-    }
+    if (isFirstLaunch) setIsFirstLaunch(false)
   }
   // WebView
   const [canGoBack, setCanGoBack] = useState(false)
@@ -82,9 +80,7 @@ export default function App() {
           }}
           handleBlur={() => {
             setSeachbarFocused(false)
-            setCurrentSearchbar(
-              isFirstLaunch === 'true' ? '' : getDisplayStr(currentUrl)
-            ) // restore currentUrl if not submitted, but keep blank if displaying into page
+            setCurrentSearchbar(isFirstLaunch ? '' : getDisplayStr(currentUrl)) // restore currentUrl if not submitted, but keep blank if displaying into page
           }}
         />
         <Frame
@@ -93,13 +89,14 @@ export default function App() {
             setCanGoBack(navState.canGoBack)
             setCanGoForward(navState.canGoForward)
             if (navState.url === 'about:blank') {
-              setCurrentSearchbar('How to use')
               return // do not chnage currentUrl to about:blank
             }
             setCurrentUrl(navState.url) // prevent text update when textinput is in focus
-            if (!seachbarFocused) setCurrentSearchbar(getDisplayStr(navState.url))
+            if (!seachbarFocused)
+              setCurrentSearchbar(getDisplayStr(navState.url))
           }}
           handleLoad={() => {
+            if (isFirstLaunch) setCurrentSearchbar('How to use')
             webviewRef.current.injectJavaScript(smoothScroll)
             setBookmarked(bookmarkExists(currentUrl, bookmarks))
           }}
