@@ -27,7 +27,7 @@ This app is not designed to be fully touch-free, but to reduce the amount of scr
 
 ## Installation
 
-If you are an Android user, you can use Wink through Expo Client, simply go to https://expo.io/@weixuanz/wink. Alternatively, you can install using APK from the [latest release](https://github.com/WeixuanZ/wink/releases/latest).
+If you are an Android user, you can use Wink through Expo Go, simply go to https://expo.io/@weixuanz/wink. Alternatively, you can install using APK from the [latest release](https://github.com/WeixuanZ/wink/releases/latest).
 
 Things are more complicated if you are using iOS, since I haven't paid for the Apple Developer Program 🤦‍♂️. Currently, you can clone this repository and use expo-cli to serve locally.
 
@@ -36,7 +36,7 @@ yarn install
 yarn run start
 ```
 
-Or you can detach to ExpoKit with `yarn run eject`, build using Xcode and sideload it onto your device. I may explore this option (e.g. provide .ipa file so you can install with [AltStore](https://github.com/rileytestut/AltStore)) when the app is in a more completed state.
+Or you can detach to plain ReactNative with `yarn run eject`, build using Xcode and sideload it onto your device. I may explore this option (e.g. provide .ipa file so you can install with [AltStore](https://github.com/rileytestut/AltStore)) when the app is in a more completed state.
 
 ## How to use 👀
 

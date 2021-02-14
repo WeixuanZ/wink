@@ -2,18 +2,10 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Camera } from 'expo-camera'
 import * as FaceDetector from 'expo-face-detector'
+import { useKeepAwake } from 'expo-keep-awake'
 
-export default function Face({
-  faceTrackState,
-  permissionGranted,
-  handleMountError,
-  handleFacesDetected
-}) {
-  if (!faceTrackState || !permissionGranted) {
-    // remove camera component to turn it off
-    return <View />
-  }
-
+function FaceCam({ handleMountError, handleFacesDetected }) {
+  useKeepAwake()
   return (
     <Camera
       style={styles.preview}
@@ -29,6 +21,15 @@ export default function Face({
       }}
     />
   )
+}
+
+export default function Face({ faceTrackState, permissionGranted, ...props }) {
+  if (!faceTrackState || !permissionGranted) {
+    // remove camera component to turn it off
+    return <View />
+  }
+
+  return <FaceCam {...props} />
 }
 
 export const previewSize = {
